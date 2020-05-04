@@ -2,6 +2,7 @@
 import tensorflow as tf
 from tensorflow.keras import models, layers, backend
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import plot_model
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Activation, Dense, Conv2D, Flatten, Dropout, MaxPooling2D, BatchNormalization
 from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array
@@ -19,6 +20,8 @@ import datetime
 import random
 import cv2
 import argparse
+import pydot
+import graphviz
 
 batch_size = 32
 epochs = 64
@@ -143,7 +146,7 @@ def gather_pokeindex(_imagePaths):
 
     model = VGGNet(width=image_dementions[0], height=image_dementions[1],depth=image_dementions[2], classes=5)
     model.compile(optimizer=Adam(lr=0.001, decay=0.001 / epochs), loss="categorical_crossentropy", metrics=['accuracy'])
-
+    plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True)
     model.summary()
 
     with file_writer.as_default():
@@ -165,6 +168,7 @@ def train_Pokedex(_test_dataset, _validation_dataset, _model):
     validation_data=(_validation_dataset,validationY),
     callbacks=[tensorboard_callback]
     )
+
     model.evaluate(_validation_dataset, validationY, verbose=2)
     model.save(os.path.join(os.path.dirname(__file__), "pokedexModel.model"))
     return history
