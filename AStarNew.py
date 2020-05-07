@@ -53,15 +53,15 @@ def astar(maze, start, end):
                 current2 = current2.parent
                 if count < len(path)-1:
                     nodePosition = (current2.position[0],current2.position[1])
-                    maze[nodePosition[0]][nodePosition[1]] = 3
+                    maze[nodePosition[0]][nodePosition[1]] = 2
                     count += 1
                 nodePosition = (currentNode.position[0],currentNode.position[1])
-                maze[nodePosition[0]][nodePosition[1]] = 3
+                maze[nodePosition[0]][nodePosition[1]] = 2
             return path[::-1]
 
         #Generate neighbours for the current node
         neighbours  = []
-        for newPosition in [(0,-1),(0,1),(1,0),(-1,-1),(-1,1),(1,-1),(1,1)]:
+        for newPosition in [(0,-1),(0,1),(1,0),(-1,-1),(-1,1),(1,-1),(1,1),(-1,0)]:
 
             nodePosition = (currentNode.position[0] + newPosition[0], currentNode.position[1]+newPosition[1])
 
@@ -91,7 +91,11 @@ def astar(maze, start, end):
 
 def main():
 
-    maze = [[0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    maze = [[0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+
+            [0, 0, 0, 0, 1, 0, 1, 0, 0, 0],
+
+            [0, 0, 0, 0, 0, 0, 1, 1, 0, 0],
 
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
 
@@ -103,20 +107,16 @@ def main():
 
             [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
 
-            [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
 
-            [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
 
-            [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-
-            [0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
-
-            [0, 0, 0, 0, 0, 0, 1, 1, 0, 0]]
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
 
     start = (5, 1)
 
-    end = (1, 1)
+    end = (1, 7)
 
     path = astar(maze, start, end)
 
