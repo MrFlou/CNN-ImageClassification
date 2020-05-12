@@ -26,7 +26,7 @@ import graphviz
 batch_size = 32
 epochs = 64
 image_dementions = (100,100,3)
-log_dir = "logs\\fit\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+log_dir = "logs\\ImageClassification\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 file_writer = tf.summary.create_file_writer(log_dir)
 print(log_dir)
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
@@ -46,42 +46,36 @@ def VGGNet(width, height, depth, classes):
 
     # CONV => RELU => POOL
     model.add(Conv2D(32, (3, 3), padding="same",
-        input_shape=inputShape))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+        input_shape=inputShape, activation="relu"))
+    #model.add(Activation("relu"))
     model.add(MaxPooling2D(pool_size=(3, 3)))
     model.add(Dropout(0.25))
 
     # (CONV => RELU) * 2 => POOL
-    model.add(Conv2D(64, (3, 3), padding="same"))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(Conv2D(64, (3, 3), padding="same"))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
+    #model.add(Activation("relu"))
+    model.add(Conv2D(64, (3, 3), padding="same", activation="relu"))
+    #model.add(Activation("relu"))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
     # (CONV => RELU) * 2 => POOL
-    model.add(Conv2D(128, (3, 3), padding="same"))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
-    model.add(Conv2D(128, (3, 3), padding="same"))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(Conv2D(128, (3, 3), padding="same", activation="relu"))
+    #model.add(Activation("relu"))
+    model.add(Conv2D(128, (3, 3), padding="same", activation="relu"))
+    #model.add(Activation("relu"))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
 
     # first (and only) set of FC => RELU layers
     model.add(Flatten())
-    model.add(Dense(1024))
-    model.add(Activation("relu"))
-    model.add(BatchNormalization())
+    model.add(Dense(1024, activation="relu"))
+    #model.add(Activation("relu"))
     model.add(Dropout(0.5))
 
     # softmax classifier
-    model.add(Dense(classes))
-    model.add(Activation("softmax"))
+    model.add(Dense(classes, activation="softmax"))
+    #model.add(Activation("softmax"))
 
     # return the constructed network architecture
     return model
