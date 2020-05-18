@@ -29,7 +29,7 @@ image_dementions = (100,100,3)
 log_dir = "logs\\ImageClassification\\" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 file_writer = tf.summary.create_file_writer(log_dir)
 print(log_dir)
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir,histogram_freq=1)
 
 def VGGNet(width, height, depth, classes):
     # initialize the model along with the input shape to be
@@ -183,7 +183,6 @@ if (args["state"] == "scan" or args["state"] == "Scan"):
     while(True):
         printscreen =  np.array(ImageGrab.grab(bbox=(200,200,800,800)))
         image = cv2.resize(printscreen, (100, 100))
-        #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = image.astype("float") / 255.0
         image = img_to_array(image)
         image = np.expand_dims(image, axis=0)
