@@ -140,7 +140,7 @@ def gather_pokeindex(_imagePaths):
 
     model = VGGNet(width=image_dementions[0], height=image_dementions[1],depth=image_dementions[2], classes=5)
     model.compile(optimizer=Adam(lr=0.001, decay=0.001 / epochs), loss="categorical_crossentropy", metrics=['accuracy'])
-    plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True)
+    #plot_model(model, to_file='model.png', show_shapes=True, show_layer_names=True)
     model.summary()
 
     with file_writer.as_default():
